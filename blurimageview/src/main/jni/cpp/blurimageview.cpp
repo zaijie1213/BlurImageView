@@ -139,15 +139,26 @@ void prepareVertex() {
     glBindVertexArray(0);
 
 }
+JNIEXPORT void JNICALL
+Java_com_skateboard_blurimageview_BlurImageViewRender_createProgram(JNIEnv *env, jobject thiz,
+                                                                    jstring vertex,
+                                                                    jstring fragment) {
+
+    generateProgram(env, vertex, fragment);
+    prepareVertex();
+
+}
+
+JNIEXPORT void JNICALL
+Java_com_skateboard_blurimageview_BlurImageViewRender_onSizeChanged(JNIEnv *env, jobject thiz,
+                                                                    jint srcWidth, jint srcHeight) {
+    prepareFrameBuffer(srcWidth, srcHeight);
+}
 
 JNIEXPORT void JNICALL
 Java_com_skateboard_blurimageview_BlurImageViewRender_prepare(JNIEnv *env, jobject thiz,
-                                                              jstring vertex, jstring fragment,
-                                                              jobject bitmap, jint srcWidth, jint srcHeight) {
-    generateProgram(env, vertex, fragment);
-    prepareVertex();
+                                                              jobject bitmap) {
     prepareTexture(env, bitmap);
-    prepareFrameBuffer(srcWidth, srcHeight);
 }
 
 void setMatrix() {
